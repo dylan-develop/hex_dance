@@ -28,4 +28,5 @@ flutter:
   uses-material-design: false
   assets:
     - assets/images/
+    - assets/images/player/
     - assets/audio/
