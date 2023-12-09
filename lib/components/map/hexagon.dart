@@ -40,8 +40,6 @@ class Hexagon extends PolygonComponent {
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
-
     add(
       PolygonHitbox(
         [
