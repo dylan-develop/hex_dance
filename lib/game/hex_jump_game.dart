@@ -5,6 +5,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hex_dance/components/fire_pillar.dart';
 import 'package:hex_dance/components/map/hex_map.dart';
 import 'package:hex_dance/components/player.dart';
 
@@ -42,6 +43,7 @@ class HexDanceGame extends FlameGame
         ],
       ),
       player,
+      FirePillar(),
     ]);
     return super.onLoad();
   }
