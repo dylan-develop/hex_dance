@@ -42,6 +42,8 @@ class Hexagon extends PolygonComponent {
   Hexagon.relative({
     required double size,
     super.position,
+    super.paint,
+    super.key,
   }) : super.relative(
           [
             Vector2(1, 0), // Right
