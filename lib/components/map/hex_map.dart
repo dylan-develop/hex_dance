@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:hex_dance/components/fire_pillar.dart';
 import 'package:hex_dance/components/map/hexagon.dart';
 import 'package:hex_dance/core/game_value.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
@@ -25,12 +26,19 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
 
     const int n = 5; // Number of Hex in one side
 
+    // load fire pillar
+    for (int i = 0; i < GameValue.fireTilesTotal; i++) {
+      final firePillar = FirePillar();
+      add(firePillar);
+      firePillar.isVisible = false;
+    }
+
     interval = Timer(
       1,
       repeat: true,
-      onTick: () {
+      onTick: () async {
         second++;
-        if (second >= 2) {
+        if (second >= 5) {
           final hexList = children.query<Hexagon>();
 
           // get fire tile random position
@@ -41,12 +49,21 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
           // clear previous fire tiles
           for (int i = 0; i < fireTiles.length; i++) {
             hexList[fireTiles[i]].paint = Paint()..color = Colors.white;
+
+            children.query<FirePillar>()[i]
+              ..position = hexList[fireTiles[i]].position
+              ..isVisible = false;
           }
 
           // paint new fire tiles
-          fireTiles = fireTilesRandom.getRange(0, 10).toList();
+          fireTiles =
+              fireTilesRandom.getRange(0, GameValue.fireTilesTotal).toList();
           for (int i = 0; i < fireTiles.length; i++) {
             hexList[fireTiles[i]].paint = Paint()..color = Colors.pink;
+
+            children.query<FirePillar>()[i]
+              ..position = hexList[fireTiles[i]].position
+              ..isVisible = true;
           }
 
           // get ice tile random position
@@ -56,11 +73,14 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
 
           // clear previous ice tiles
           for (int i = 0; i < iceTiles.length; i++) {
-            // hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
+            if (!fireTiles.contains(iceTiles[i])) {
+              hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
+            }
           }
 
           // paint new ice tiles
-          iceTiles = iceTilesRandom.getRange(0, 10).toList();
+          iceTiles =
+              iceTilesRandom.getRange(0, GameValue.iceTilesTotal).toList();
           for (int i = 0; i < iceTiles.length; i++) {
             hexList[iceTiles[i]].paint = Paint()..color = Colors.blue;
           }
@@ -75,12 +95,9 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
       for (int j = 0; j < i + 1; j++) {
         final double firstHexX = size.x / 2 - i * GameValue.hexInradius * 2;
 
-        final posX = firstHexX + j * GameValue.hexInradius * 4;
-        final posY = GameValue.hexRadius / 2 + i * GameValue.hexRadius;
-
         add(
           Hexagon.relative(
-            key: ComponentKey.named('($posX, $posY)'),
+            index: children.query<Hexagon>().length,
             size: GameValue.hexRadius,
             position: Vector2(
               firstHexX + j * GameValue.hexInradius * 4,
@@ -105,6 +122,7 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
             size.x / 2 - (rowIteration - 1) * GameValue.hexInradius * 2;
         add(
           Hexagon.relative(
+            index: children.query<Hexagon>().length,
             size: GameValue.hexRadius,
             position: Vector2(
               firstHexX + j * GameValue.hexInradius * 4,
@@ -122,6 +140,7 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
             size.x / 2 - (n + 1 + i) * GameValue.hexInradius * 2;
         add(
           Hexagon.relative(
+            index: children.query<Hexagon>().length,
             size: GameValue.hexRadius,
             position: Vector2(
               firstHexX + j * GameValue.hexInradius * 4,
