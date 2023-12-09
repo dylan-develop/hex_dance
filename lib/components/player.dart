@@ -23,7 +23,8 @@ class Player extends SpriteAnimationComponent
         textureSize: Vector2(250.0, 250.0),
       ),
     );
-    size = Vector2(50, 50);
+    size = GameValue.playerSize;
+    position = Vector2(-size.x / 2, -size.y / 2);
     add(RectangleHitbox(size: size));
     return super.onLoad();
   }
@@ -39,43 +40,43 @@ class Player extends SpriteAnimationComponent
 
   void moveUp() {
     debugPrint('moveUp');
-    position = Vector2(position.x, position.y - GameValue.hexCircumradius * 2);
+    position = Vector2(position.x, position.y - GameValue.hexRadius * 2);
   }
 
   void moveDown() {
     debugPrint('moveDown');
-    position = Vector2(position.x, position.y + GameValue.hexCircumradius * 2);
+    position = Vector2(position.x, position.y + GameValue.hexRadius * 2);
   }
 
   void moveUpLeft() {
     debugPrint('moveUpLeft');
     position = Vector2(
-      position.x - sin(60.0 * (pi / 180.0)) * GameValue.hexCircumradius * 2,
-      position.y - cos(60.0 * (pi / 180.0)) * GameValue.hexCircumradius * 2,
+      position.x - sin(60.0 * (pi / 180.0)) * GameValue.hexRadius * 2,
+      position.y - cos(60.0 * (pi / 180.0)) * GameValue.hexRadius * 2,
     );
   }
 
   void moveUpRight() {
     debugPrint('moveUpRight');
     position = Vector2(
-      position.x + sin(60.0 * (pi / 180.0)) * GameValue.hexCircumradius * 2,
-      position.y - cos(60.0 * (pi / 180.0)) * GameValue.hexCircumradius * 2,
+      position.x + sin(60.0 * (pi / 180.0)) * GameValue.hexRadius * 2,
+      position.y - cos(60.0 * (pi / 180.0)) * GameValue.hexRadius * 2,
     );
   }
 
   void moveDownLeft() {
     debugPrint('moveDownLeft');
     position = Vector2(
-      position.x - sin(60.0 * (pi / 180.0)) * GameValue.hexCircumradius * 2,
-      position.y + cos(60.0 * (pi / 180.0)) * GameValue.hexCircumradius * 2,
+      position.x - sin(60.0 * (pi / 180.0)) * GameValue.hexRadius * 2,
+      position.y + cos(60.0 * (pi / 180.0)) * GameValue.hexRadius * 2,
     );
   }
 
   void moveDownRight() {
     debugPrint('moveDownRight');
     position = Vector2(
-      position.x + sin(60.0 * (pi / 180.0)) * GameValue.hexCircumradius * 2,
-      position.y + cos(60.0 * (pi / 180.0)) * GameValue.hexCircumradius * 2,
+      position.x + sin(60.0 * (pi / 180.0)) * GameValue.hexRadius * 2,
+      position.y + cos(60.0 * (pi / 180.0)) * GameValue.hexRadius * 2,
     );
   }
 }

@@ -10,7 +10,7 @@ void main() {
       overlayBuilderMap: {
         'MainMenu': (_, game) => MainMenu(game: game),
       },
-      initialActiveOverlays: const ['MainMenu'],
+      // initialActiveOverlays: const ['MainMenu'],
     ),
   );
 }

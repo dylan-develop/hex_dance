@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:hex_dance/components/fire_pillar.dart';
 import 'package:hex_dance/components/map/hex_map.dart';
 import 'package:hex_dance/components/player.dart';
+import 'package:hex_dance/core/game_value.dart';
 
 class HexDanceGame extends FlameGame
     with HasCollisionDetection, KeyboardEvents {
@@ -15,41 +16,37 @@ class HexDanceGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    final double maxSide = min(size.x, size.y);
-    final CameraComponent cameraComponent = CameraComponent.withFixedResolution(
+    camera = CameraComponent.withFixedResolution(
       world: world,
-      width: maxSide,
-      height: maxSide,
-      // height: ,
-      // viewport: FixedAspectRatioViewport(
-      //   aspectRatio: 1,
-      // ),
-
-      // width: maxSide,
-      // height: maxSide,
+      width: GameValue.screenSize,
+      height: GameValue.screenSize,
     );
-    await addAll([
-      world,
-      cameraComponent,
-    ]);
+    await add(world);
 
-    await world.addAll([
-      HexMap(
-        vertices: [
-          Vector2(0, 0), // Right
-          Vector2(0, maxSide), // Bottom-right
-          Vector2(maxSide, maxSide), // Bottom-left
-          Vector2(maxSide, 0), // L
+    world.addAll([
+      HexMap.relative(
+        [
+          Vector2(0, 1),
+          Vector2(sqrt(3) * 1 / 2, 1 / 2),
+          Vector2(sqrt(3) * 1 / 2, -1 / 2),
+          Vector2(0, -1),
+          Vector2(-sqrt(3) * 1 / 2, -1 / 2),
+          Vector2(-sqrt(3) * 1 / 2, 1 / 2),
         ],
+        position: Vector2(
+          -(sqrt(3) * 1 / 2 * GameValue.boardSize / 2),
+          -GameValue.boardSize / 2,
+        ),
+        parentSize: Vector2.all(
+          GameValue.boardSize,
+        ),
       ),
       player,
       FirePillar(),
     ]);
+
     return super.onLoad();
   }
-
-  @override
-  Color backgroundColor() => const Color(0xFFDADADA);
 
   @override
   KeyEventResult onKeyEvent(
@@ -89,4 +86,7 @@ class HexDanceGame extends FlameGame
 
     return KeyEventResult.ignored;
   }
+
+  @override
+  Color backgroundColor() => Colors.grey;
 }
