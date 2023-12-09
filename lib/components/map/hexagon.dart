@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/components.dart';
@@ -68,4 +69,41 @@ class Hexagon extends PolygonComponent {
             ),
           ],
         );
+
+  @override
+  FutureOr<void> onLoad() {
+    // add(
+    // PolygonHitbox(
+    //   [
+    // Vector2(
+    //   GameValue.hexSizeLength,
+    //   0,
+    // ), // Right
+    // Vector2(
+    //   GameValue.hexSizeLength / 2,
+    //   GameValue.hexInradius,
+    // ), // Bottom-right
+    // Vector2(
+    //   -GameValue.hexSizeLength / 2,
+    //   GameValue.hexInradius,
+    // ), // Bottom-left
+    // Vector2(
+    //   -GameValue.hexSizeLength,
+    //   0,
+    // ), // Left
+    // Vector2(
+    //   -GameValue.hexSizeLength / 2,
+    //   -GameValue.hexInradius,
+    // ), // Top-left
+    // Vector2(
+    //   GameValue.hexSizeLength / 2,
+    //   -GameValue.hexInradius,
+    // ), // Top-right
+    // ],
+    // anchor: Anchor.center,
+    // position: Vector2(size.x / 2, size.y / 2),
+    // ),
+    // );
+    return super.onLoad();
+  }
 }

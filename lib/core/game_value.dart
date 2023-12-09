@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'package:flame/components.dart';
+import 'package:flame/game.dart';
 
 class GameValue {
   static double hexRadius = 32;
   static double hexInradius = sqrt(3) * 1 / 2 * hexRadius;
 
   static double screenSize = 640.0;
-  static double boardSize = 560.0;
+  static double boardSize = 608.0;
 
   static List<Vector2> hexRelativeVector2 = [
     Vector2(1, 0), // Right
@@ -17,4 +17,7 @@ class GameValue {
     Vector2(-1 / 2, -sqrt(3) * 1 / 2), // Top-left
     Vector2(1 / 2, -sqrt(3) * 1 / 2),
   ];
+
+  static Vector2 playerSize = Vector2(50.0, 50.0);
+  static Vector2 firePillarSize = Vector2(94.0, 184.0);
 }
