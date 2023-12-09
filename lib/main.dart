@@ -1,6 +1,6 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:hex_dance/game/hex_jump_game.dart';
+import 'package:hex_dance/game/hex_dance_game.dart';
 import 'package:hex_dance/overlays/main_menu.dart';
 
 void main() {
@@ -10,7 +10,7 @@ void main() {
       overlayBuilderMap: {
         'MainMenu': (_, game) => MainMenu(game: game),
       },
-      // initialActiveOverlays: const ['MainMenu'],
+      initialActiveOverlays: const ['MainMenu'],
     ),
   );
 }

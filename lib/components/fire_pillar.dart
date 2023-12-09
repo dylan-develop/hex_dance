@@ -6,7 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:hex_dance/core/game_value.dart';
 
-import 'package:hex_dance/game/hex_jump_game.dart';
+import 'package:hex_dance/game/hex_dance_game.dart';
 
 class FirePillar extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameRef<HexDanceGame> {

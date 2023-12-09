@@ -4,7 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_dance/components/map/hexagon.dart';
 import 'package:hex_dance/core/game_value.dart';
-import 'package:hex_dance/game/hex_jump_game.dart';
+import 'package:hex_dance/game/hex_dance_game.dart';
 
 class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
   HexMap.relative(
