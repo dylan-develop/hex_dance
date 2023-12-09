@@ -12,33 +12,34 @@ class Hexagon extends PolygonComponent {
   }) : super(
           [
             Vector2(
-              GameValue.hexSizeLength,
+              GameValue.hexRadius,
               0,
             ), // Right
             Vector2(
-              GameValue.hexSizeLength / 2,
+              GameValue.hexRadius / 2,
               GameValue.hexInradius,
             ), // Bottom-right
             Vector2(
-              -GameValue.hexSizeLength / 2,
+              -GameValue.hexRadius / 2,
               GameValue.hexInradius,
             ), // Bottom-left
             Vector2(
-              -GameValue.hexSizeLength,
+              -GameValue.hexRadius,
               0,
             ), // Left
             Vector2(
-              -GameValue.hexSizeLength / 2,
+              -GameValue.hexRadius / 2,
               -GameValue.hexInradius,
             ), // Top-left
             Vector2(
-              GameValue.hexSizeLength / 2,
+              GameValue.hexRadius / 2,
               -GameValue.hexInradius,
             ), // Top-right
           ],
         );
 
   Hexagon.relative({
+    required double size,
     super.position,
   }) : super.relative(
           [
@@ -49,7 +50,7 @@ class Hexagon extends PolygonComponent {
             Vector2(-1 / 2, -sqrt(3) * 1 / 2), // Top-left
             Vector2(1 / 2, -sqrt(3) * 1 / 2),
           ],
-          parentSize: Vector2.all(112.0),
+          parentSize: Vector2.all(size * 2),
           anchor: Anchor.center,
           children: [
             TextComponent(
@@ -61,7 +62,7 @@ class Hexagon extends PolygonComponent {
                 ),
               ),
               anchor: Anchor.center,
-              position: Vector2.all(56.0),
+              position: Vector2.all(size),
             ),
           ],
         );

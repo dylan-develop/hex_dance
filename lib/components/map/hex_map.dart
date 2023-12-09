@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
@@ -8,34 +7,28 @@ import 'package:hex_dance/core/game_value.dart';
 import 'package:hex_dance/game/hex_jump_game.dart';
 
 class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
-  HexMap({
-    required List<Vector2> vertices,
-  }) : super(
-          vertices,
-        );
+  HexMap.relative(
+    super.relation, {
+    required super.parentSize,
+    required super.position,
+  }) : super.relative();
 
   @override
   FutureOr<void> onLoad() async {
-    final double maxSide = min(gameRef.size.x, gameRef.size.y);
-    position = Vector2(-maxSide / 2, -maxSide / 2);
-    const int n = 5; // Number of Hex in one side
     paint = Paint()..color = Colors.black;
+
+    const int n = 5; // Number of Hex in one side
 
     // Upper
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < i + 1; j++) {
         final double firstHexX = size.x / 2 - i * GameValue.hexInradius * 2;
         add(
-          // Hexagon(
-          //   position: Vector2(
-          //     firstHexX + j * GameValue.hexInradius * 4,
-          //     0 + i * GameValue.hexCircumradius,
-          //   ),
-          // ),
           Hexagon.relative(
+            size: GameValue.hexRadius,
             position: Vector2(
               firstHexX + j * GameValue.hexInradius * 4,
-              0 + i * GameValue.hexCircumradius,
+              GameValue.hexRadius / 2 + i * GameValue.hexRadius,
             ),
           ),
         );
@@ -55,16 +48,11 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
         final double firstHexX =
             size.x / 2 - (rowIteration - 1) * GameValue.hexInradius * 2;
         add(
-          // Hexagon(
-          //   position: Vector2(
-          //     firstHexX + j * GameValue.hexInradius * 4,
-          //     0 + (n + i) * GameValue.hexCircumradius,
-          //   ),
-          // ),
           Hexagon.relative(
+            size: GameValue.hexRadius,
             position: Vector2(
               firstHexX + j * GameValue.hexInradius * 4,
-              0 + (n + i) * GameValue.hexCircumradius,
+              GameValue.hexRadius / 2 + (n + i) * GameValue.hexRadius,
             ),
           ),
         );
@@ -78,17 +66,13 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
             size.x / 2 - (n + 1 + i) * GameValue.hexInradius * 2;
         add(
           Hexagon.relative(
+            size: GameValue.hexRadius,
             position: Vector2(
               firstHexX + j * GameValue.hexInradius * 4,
-              0 + (n + middleColumnTotal + i) * GameValue.hexCircumradius,
+              GameValue.hexRadius / 2 +
+                  (n + middleColumnTotal + i) * GameValue.hexRadius,
             ),
           ),
-          // Hexagon(
-          //   position: Vector2(
-          //     firstHexX + j * GameValue.hexInradius * 4,
-          //     0 + (n + middleColumnTotal + i) * GameValue.hexCircumradius,
-          //   ),
-          // ),
         );
       }
     }
