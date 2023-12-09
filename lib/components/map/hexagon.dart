@@ -73,7 +73,7 @@ class Hexagon extends PolygonComponent {
               text: '(${position?.x.round()},${position?.y.round()})',
               textRenderer: TextPaint(
                 style: const TextStyle(
-                  color: Colors.red,
+                  color: Colors.black,
                   fontSize: 12.0,
                 ),
               ),
