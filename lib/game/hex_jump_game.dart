@@ -9,22 +9,13 @@ import 'package:hex_dance/components/map/hex_map.dart';
 class HexDanceGame extends FlameGame {
   @override
   Future<void> onLoad() async {
-    debugMode = true;
-    final double maxSide = min(size.x, size.y);
-    final CameraComponent cameraComponent = CameraComponent(
-      world: world,
+    camera = CameraComponent(
       viewport: FixedAspectRatioViewport(
         aspectRatio: 1,
       ),
-
-      // width: maxSide,
-      // height: maxSide,
     );
-
-    await addAll([
-      world,
-      cameraComponent,
-    ]);
+    // debugMode = true;
+    final double maxSide = min(size.x, size.y);
 
     await world.addAll([
       HexMap(

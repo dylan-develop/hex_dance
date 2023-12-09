@@ -26,7 +26,13 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
       for (int j = 0; j < i + 1; j++) {
         final double firstHexX = size.x / 2 - i * GameValue.hexInradius * 2;
         add(
-          Hexagon(
+          // Hexagon(
+          //   position: Vector2(
+          //     firstHexX + j * GameValue.hexInradius * 4,
+          //     0 + i * GameValue.hexCircumradius,
+          //   ),
+          // ),
+          Hexagon.relative(
             position: Vector2(
               firstHexX + j * GameValue.hexInradius * 4,
               0 + i * GameValue.hexCircumradius,
@@ -49,7 +55,13 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
         final double firstHexX =
             size.x / 2 - (rowIteration - 1) * GameValue.hexInradius * 2;
         add(
-          Hexagon(
+          // Hexagon(
+          //   position: Vector2(
+          //     firstHexX + j * GameValue.hexInradius * 4,
+          //     0 + (n + i) * GameValue.hexCircumradius,
+          //   ),
+          // ),
+          Hexagon.relative(
             position: Vector2(
               firstHexX + j * GameValue.hexInradius * 4,
               0 + (n + i) * GameValue.hexCircumradius,
@@ -65,12 +77,18 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
         final double firstHexX =
             size.x / 2 - (n + 1 + i) * GameValue.hexInradius * 2;
         add(
-          Hexagon(
+          Hexagon.relative(
             position: Vector2(
               firstHexX + j * GameValue.hexInradius * 4,
               0 + (n + middleColumnTotal + i) * GameValue.hexCircumradius,
             ),
           ),
+          // Hexagon(
+          //   position: Vector2(
+          //     firstHexX + j * GameValue.hexInradius * 4,
+          //     0 + (n + middleColumnTotal + i) * GameValue.hexCircumradius,
+          //   ),
+          // ),
         );
       }
     }
