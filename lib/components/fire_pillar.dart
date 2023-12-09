@@ -9,13 +9,14 @@ import 'package:hex_dance/core/game_value.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
 
 class FirePillar extends SpriteAnimationComponent
-    with CollisionCallbacks, HasGameRef<HexDanceGame> {
+    with CollisionCallbacks, HasVisibility, HasGameRef<HexDanceGame> {
   FirePillar()
       : super(
           anchor: Anchor.bottomCenter,
         );
   @override
   FutureOr<void> onLoad() async {
+    priority = 1;
     final ui.Image image = await Flame.images.load('fire_pillar.png');
     animation = SpriteAnimation.fromFrameData(
       image,

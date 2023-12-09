@@ -41,6 +41,7 @@ class Hexagon extends PolygonComponent {
 
   Hexagon.relative({
     required double size,
+    required int index,
     super.position,
     super.paint,
     super.key,
@@ -56,6 +57,18 @@ class Hexagon extends PolygonComponent {
           parentSize: Vector2.all(size * 2),
           anchor: Anchor.center,
           children: [
+            TextComponent(
+              text: '$index',
+              textRenderer: TextPaint(
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              anchor: Anchor.center,
+              position: Vector2(size, size - 12.0),
+            ),
             TextComponent(
               text: '(${position?.x.round()},${position?.y.round()})',
               textRenderer: TextPaint(
