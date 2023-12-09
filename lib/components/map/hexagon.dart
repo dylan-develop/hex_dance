@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:hex_jump/core/game_value.dart';
+import 'package:hex_dance/core/game_value.dart';
 
 class Hexagon extends PolygonComponent {
   Hexagon({

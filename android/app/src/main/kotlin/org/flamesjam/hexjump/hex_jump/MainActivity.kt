@@ -1,4 +1,4 @@
-package org.flamesjam.hexjump.hex_jump
+package org.flamejam.hexdance.hex_dance
 
 import io.flutter.embedding.android.FlutterActivity
 

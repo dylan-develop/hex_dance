@@ -1,4 +1,4 @@
-# hex_jump
+# hex_dance
 
 A new Flutter project.
 

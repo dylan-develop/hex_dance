@@ -4,9 +4,9 @@ import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:hex_jump/components/map/hex_map.dart';
+import 'package:hex_dance/components/map/hex_map.dart';
 
-class HexJumpGame extends FlameGame {
+class HexDanceGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     debugMode = true;
