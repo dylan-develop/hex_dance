@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/game.dart';
 
 class GameValue {
+  static int noOfHexInSide = 5;
   static double hexRadius = 32;
   static double hexInradius = sqrt(3) * 1 / 2 * hexRadius;
 

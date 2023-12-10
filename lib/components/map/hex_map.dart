@@ -24,7 +24,7 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
   FutureOr<void> onLoad() async {
     paint = Paint()..color = Colors.black;
 
-    const int n = 5; // Number of Hex in one side
+    final int n = GameValue.noOfHexInSide; // Number of Hex in one side
 
     // load fire pillar
     for (int i = 0; i < GameValue.fireTilesTotal; i++) {
@@ -109,7 +109,7 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
     }
 
     // Middle
-    const int middleColumnTotal = 2 * (n - 1) - 1;
+    final int middleColumnTotal = 2 * (n - 1) - 1;
     for (int i = 0; i < middleColumnTotal; i++) {
       int rowIteration;
       if (i.isEven) {
