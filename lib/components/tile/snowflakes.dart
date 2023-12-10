@@ -1,15 +1,13 @@
 import 'dart:async';
-import 'dart:ui' as ui;
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
-import 'package:flame/flame.dart';
+
 import 'package:hex_dance/core/game_value.dart';
 
 import 'package:hex_dance/game/hex_dance_game.dart';
 
-class Snowflakes extends SpriteComponent
+class Snowflakes extends PositionComponent
     with CollisionCallbacks, HasGameRef<HexDanceGame> {
   Snowflakes({
     super.position,
@@ -19,9 +17,6 @@ class Snowflakes extends SpriteComponent
   @override
   FutureOr<void> onLoad() async {
     priority = 1;
-    final ui.Image image = await Flame.images.load('tile/snowflakes.gif');
-    sprite = Sprite(image);
-
     size = GameValue.snowflakesSize;
     add(
       RectangleHitbox(
@@ -31,7 +26,6 @@ class Snowflakes extends SpriteComponent
       ),
     );
 
-    add(RemoveEffect(delay: 5.8));
     return super.onLoad();
   }
 }
