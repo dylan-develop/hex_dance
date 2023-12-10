@@ -1,13 +1,9 @@
-import 'dart:async';
-
-import 'package:flame/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_dance/components/buttons/hex_button.dart';
-import 'package:hex_dance/core/game_value.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
 import 'package:hexagon/hexagon.dart';
 
-class MainMenu extends StatefulWidget {
+class MainMenu extends StatelessWidget {
   // Reference to parent game.
   final HexDanceGame game;
 
@@ -17,101 +13,52 @@ class MainMenu extends StatefulWidget {
   });
 
   @override
-  State<MainMenu> createState() => _MainMenuState();
-}
-
-class _MainMenuState extends State<MainMenu> {
-  late Timer timer;
-  @override
-  void initState() {
-    timer = Timer.periodic(
-      const Duration(seconds: 2),
-      (callback) {
-        setState(() {});
-      },
-    );
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    const depth = 2;
+
+    Widget? mainButton(Coordinates coordinates) {
+      if (coordinates.x == depth && coordinates.y == -depth) {
+        return HexButton(
+          onTap: () {
+            game.overlays.remove('MainMenu');
+            game.startGame();
+          },
+          width: 144.0,
+          height: 144.0,
+          fontSize: 48.0,
+          emoji: '🎮',
+          color: Colors.red,
+        );
+      } else if (coordinates.x == depth - 1 && coordinates.y == -depth) {
+        return HexButton(
+          onTap: () {
+            game.overlays.add('InstructionMenu');
+          },
+          width: 144.0,
+          height: 144.0,
+          fontSize: 48.0,
+          emoji: '📖',
+          color: Colors.blue,
+        );
+      }
+      return null;
+    }
+
     return Material(
       color: Colors.transparent,
-      child: Stack(
-        children: [
-          Center(
-            child: HexagonGrid.flat(
-              depth: 4,
-              buildTile: (coordinates) {
-                final colors = [
-                  Colors.red,
-                  Colors.blue,
-                  Colors.white,
-                  Colors.white,
-                ];
-            
-                return HexagonWidgetBuilder(
-                  padding: 2.0,
-                  cornerRadius: 8.0,
-                  color: colors.random(),
-                );
-              },
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              padding: EdgeInsets.all(GameValue.hexRadius),
-              margin: EdgeInsets.only(bottom: GameValue.boardSize / 5),
-              width: GameValue.boardSize / 2,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.9),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(12.0),
-                ),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: Center(
-                            child: HexButton(
-                              onTap: () {
-                                widget.game.overlays.remove('MainMenu');
-                                widget.game.startGame();
-                              },
-                              emoji: '🎮',
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: HexButton(
-                            onTap: () {
-                              widget.game.overlays.add('InstructionMenu');
-                            },
-                            emoji: '📖',
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+      child: Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.all(24.0),
+        child: HexagonGrid.flat(
+          depth: depth,
+          buildTile: (coordinates) {
+            return HexagonWidgetBuilder(
+              padding: 2.0,
+              cornerRadius: 8.0,
+              child: mainButton(coordinates),
+            );
+          },
+        ),
       ),
     );
   }

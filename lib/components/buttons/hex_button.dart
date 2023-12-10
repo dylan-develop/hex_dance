@@ -10,12 +10,18 @@ class HexButton extends StatefulWidget {
     this.emoji,
     this.color,
     this.child,
+    this.width,
+    this.height,
+    this.fontSize = 24.0,
   });
 
   final void Function()? onTap;
   final String? emoji;
   final Color? color;
   final Widget? child;
+  final double? width;
+  final double? height;
+  final double fontSize;
 
   @override
   State<HexButton> createState() => _HexButtonState();
@@ -24,7 +30,6 @@ class HexButton extends StatefulWidget {
 class _HexButtonState extends State<HexButton> {
   Color _originalColor = Colors.white;
   Color _color = Colors.white;
-  
 
   @override
   void initState() {
@@ -56,20 +61,22 @@ class _HexButtonState extends State<HexButton> {
         }
       },
       child: HexagonWidget.flat(
-        width: GameValue.hexRadius * 2,
-        height: GameValue.hexInradius * 2,
-        elevation: 10.0,
+        width: widget.width ?? GameValue.hexRadius * 2,
+        height: widget.height ?? GameValue.hexInradius * 2,
+        elevation: 8.0,
         cornerRadius: 8.0,
         color: _color,
         child: Center(
-          child: widget.child ?? Text(
-            widget.emoji ?? '',
-            style: const TextStyle(
-              fontSize: 20.0,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: widget.child ??
+              Text(
+                widget.emoji ?? '',
+                style: TextStyle(
+                  fontSize: widget.fontSize,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
         ),
       ),
     );
