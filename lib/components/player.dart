@@ -27,7 +27,7 @@ class Player extends SpriteAnimationComponent
   double normalJumpStepTime = 0.20;
   double stepTimeScale = 1;
   Vector2 playerHexCoordinate = Vector2.zero();
-
+  bool freezedDebuff = false;
   @override
   FutureOr<void> onLoad() async {
     await initAnimation();
@@ -49,18 +49,24 @@ class Player extends SpriteAnimationComponent
   ) {
     if (other is FireTile) {
     } else if (other is IceTile) {
-      FlameAudio.play('ice.mp3');
+      if (!freezedDebuff) {
+        FlameAudio.play('ice.mp3');
+      }
     } else if (other is FirePillar) {
       FlameAudio.play('fire.mp3');
       game.gameover();
-      // animation = deathAnimation;
     } else if (other is Snowflakes) {
+      if (freezedDebuff) {
+        return;
+      }
+      freezedDebuff = true;
       stepTimeScale = 5;
       decorator.addLast(
         PaintDecorator.tint(
           const Color.fromARGB(80, 33, 150, 235),
         ),
       );
+
       Future.delayed(
         const Duration(seconds: 5),
         () {
@@ -68,6 +74,7 @@ class Player extends SpriteAnimationComponent
           if (!decorator.isLastDecorator) {
             decorator.removeLast();
           }
+          freezedDebuff = false;
         },
       );
     }

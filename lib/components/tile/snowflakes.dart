@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 
 import 'package:hex_dance/core/game_value.dart';
 
@@ -25,7 +26,7 @@ class Snowflakes extends PositionComponent
         anchor: Anchor.center,
       ),
     );
-
+    add(RemoveEffect(delay: 5.8));
     return super.onLoad();
   }
 }
