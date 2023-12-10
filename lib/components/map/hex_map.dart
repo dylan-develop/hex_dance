@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
@@ -46,10 +47,21 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
           for (int i = 0; i < fireTiles.length; i++) {
             hexList[fireTiles[i]].paint = Paint()..color = Colors.white;
           }
+          // clear previous ice tiles
+          for (int i = 0; i < iceTiles.length; i++) {
+              hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
+          }
 
           // paint new fire tiles
-          fireTiles =
-              fireTilesRandom.getRange(0, GameValue.fireTilesTotal).toList();
+          fireTiles = fireTilesRandom
+              .getRange(
+                0,
+                min(
+                  GameValue.fireTilesTotal + (second / 60 / 60).floor(),
+                  fireTilesRandom.length ~/ 2,
+                ),
+              )
+              .toList();
           for (int i = 0; i < fireTiles.length; i++) {
             hexList[fireTiles[i]].paint = Paint()..color = Colors.pink;
             hexList[fireTiles[i]].add(FireTile());
@@ -69,13 +81,6 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
           final iceTilesRandom = [...fireTilesRandom]
             ..removeWhere((element) => fireTiles.contains(element))
             ..shuffle();
-
-          // clear previous ice tiles
-          for (int i = 0; i < iceTiles.length; i++) {
-            if (!fireTiles.contains(iceTiles[i])) {
-              hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
-            }
-          }
 
           // paint new ice tiles
           iceTiles =
