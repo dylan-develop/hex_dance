@@ -49,7 +49,7 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
           }
           // clear previous ice tiles
           for (int i = 0; i < iceTiles.length; i++) {
-              hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
+            hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
           }
 
           // paint new fire tiles
@@ -89,16 +89,14 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
             hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
             hexList[iceTiles[i]].add(IceTile());
             hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
-            Future.delayed(const Duration(seconds: 2), () {
-              hexList[iceTiles[i]].add(
-                Snowflakes(
-                  position: Vector2(
-                    GameValue.hexRadius,
-                    GameValue.hexInradius,
-                  ),
+            hexList[iceTiles[i]].add(
+              Snowflakes(
+                position: Vector2(
+                  GameValue.hexRadius,
+                  GameValue.hexInradius,
                 ),
-              );
-            });
+              ),
+            );
           }
         }
       },

@@ -18,7 +18,6 @@ class Snowflakes extends SpriteComponent
         );
   @override
   FutureOr<void> onLoad() async {
-    // debugMode = true;
     priority = 1;
     final ui.Image image = await Flame.images.load('tile/snowflakes.gif');
     sprite = Sprite(image);
@@ -32,7 +31,7 @@ class Snowflakes extends SpriteComponent
       ),
     );
 
-    add(RemoveEffect(delay: 0.10 * 14 * 3 - 0.2));
+    add(RemoveEffect(delay: 5.8));
     return super.onLoad();
   }
 }

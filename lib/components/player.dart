@@ -54,7 +54,6 @@ class Player extends SpriteAnimationComponent
       FlameAudio.play('fire.mp3');
       game.gameover();
       // animation = deathAnimation;
-      game.pause();
     } else if (other is Snowflakes) {
       stepTimeScale = 5;
       decorator.addLast(
