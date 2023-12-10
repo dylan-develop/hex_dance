@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
 import 'package:hex_dance/core/game_value.dart';
 
@@ -10,12 +11,14 @@ import 'package:hex_dance/game/hex_dance_game.dart';
 
 class FirePillar extends SpriteAnimationComponent
     with CollisionCallbacks, HasVisibility, HasGameRef<HexDanceGame> {
-  FirePillar()
-      : super(
+  FirePillar({
+    super.position,
+  }) : super(
           anchor: Anchor.bottomCenter,
         );
   @override
   FutureOr<void> onLoad() async {
+    debugMode = true;
     priority = 1;
     final ui.Image image = await Flame.images.load('fire_pillar.png');
     animation = SpriteAnimation.fromFrameData(
@@ -27,7 +30,14 @@ class FirePillar extends SpriteAnimationComponent
       ),
     );
     size = GameValue.firePillarSize;
-    add(RectangleHitbox(size: size));
+    add(
+      RectangleHitbox(
+        size: Vector2.all(25.0),
+        position: Vector2(size.x / 2, size.y - GameValue.hexInradius),
+        anchor: Anchor.center,
+      ),
+    );
+    add(RemoveEffect(delay: 0.10 * 14 * 3 - 0.1));
     return super.onLoad();
   }
 
