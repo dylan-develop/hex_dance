@@ -4,7 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_dance/core/game_value.dart';
 
-class Score extends PositionComponent {
+class Score extends PositionComponent with HasVisibility{
   Timer? scoreCounter;
 
   int second = 0;
@@ -48,6 +48,7 @@ class Score extends PositionComponent {
   @override
   FutureOr<void> onLoad() {
     position = Vector2(size.x / 2, size.y / 2);
+    isVisible = false;
   }
 
   @override

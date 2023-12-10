@@ -22,7 +22,10 @@ class MainMenu extends StatelessWidget {
         return HexButton(
           onTap: () {
             game.overlays.remove('MainMenu');
-            FlameAudio.bgm.play('bgm.wav');
+            FlameAudio.bgm
+                .stop()
+                .then((value) => FlameAudio.bgm.play('bgm.wav'));
+
             game.startGame();
           },
           width: 144.0,

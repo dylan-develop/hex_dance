@@ -48,12 +48,26 @@ class GameOver extends StatelessWidget {
                 ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 16.0),
-                  child: Text(
-                    '⏱️ ${game.scoreCounter.secondStr.join()}',
-                    style: const TextStyle(
-                      fontSize: 28.0,
-                    ),
-                  ),
+                  child: (game.scoreCounter.second > 60 * 10)
+                      ? const Text(
+                          '♾️',
+                          style: TextStyle(
+                            fontSize: 28.0,
+                          ),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            for (int i = 0; i < 5; i++)
+                              if (game.scoreCounter.second > 60 * i)
+                                const Text(
+                                  '⭐',
+                                  style: TextStyle(
+                                    fontSize: 28.0,
+                                  ),
+                                ),
+                          ],
+                        ),
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.min,
