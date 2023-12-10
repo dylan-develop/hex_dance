@@ -26,13 +26,6 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
 
     const int n = 5; // Number of Hex in one side
 
-    // load fire pillar
-    for (int i = 0; i < GameValue.fireTilesTotal; i++) {
-      final firePillar = FirePillar();
-      add(firePillar);
-      firePillar.isVisible = false;
-    }
-
     interval = Timer(
       1,
       repeat: true,
@@ -49,13 +42,6 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
           // clear previous fire tiles
           for (int i = 0; i < fireTiles.length; i++) {
             hexList[fireTiles[i]].paint = Paint()..color = Colors.white;
-
-            children.query<FirePillar>()[i]
-              ..position = Vector2(
-                hexList[fireTiles[i]].position.x,
-                hexList[fireTiles[i]].position.y + GameValue.hexInradius,
-              )
-              ..isVisible = false;
           }
 
           // paint new fire tiles
@@ -63,15 +49,16 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
               fireTilesRandom.getRange(0, GameValue.fireTilesTotal).toList();
           for (int i = 0; i < fireTiles.length; i++) {
             hexList[fireTiles[i]].paint = Paint()..color = Colors.pink;
-            Future.delayed(
-              const Duration(seconds: 2),
-              () => children.query<FirePillar>()[i]
-                ..position = Vector2(
-                  hexList[fireTiles[i]].position.x,
-                  hexList[fireTiles[i]].position.y + GameValue.hexInradius,
-                )
-                ..isVisible = true,
-            );
+            Future.delayed(const Duration(seconds: 2), () {
+              hexList[fireTiles[i]].add(
+                FirePillar(
+                  position: Vector2(
+                    GameValue.hexRadius,
+                    GameValue.hexInradius * 2,
+                  ),
+                ),
+              );
+            });
           }
 
           // get ice tile random position
