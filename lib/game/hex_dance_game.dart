@@ -21,7 +21,12 @@ class HexDanceGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    await FlameAudio.audioCache.loadAll(['bgm.wav', 'fire.mp3', 'ice.mp3w']);
+    await FlameAudio.audioCache.loadAll([
+      'bgm.wav',
+      'fire.mp3',
+      'ice.mp3',
+      'gameover.wav',
+    ]);
 
     camera = CameraComponent.withFixedResolution(
       world: world,
@@ -115,6 +120,7 @@ class HexDanceGame extends FlameGame
 
   void gameover() {
     gameState = GameState.gameover;
+    FlameAudio.bgm.stop().then((value) => FlameAudio.play('gameover.wav'));
     overlays.add('GameOver');
   }
 

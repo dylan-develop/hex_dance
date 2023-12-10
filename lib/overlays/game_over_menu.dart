@@ -1,3 +1,4 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_dance/components/buttons/hex_button.dart';
 import 'package:hex_dance/core/game_value.dart';
@@ -77,6 +78,9 @@ class GameOver extends StatelessWidget {
                         child: HexButton(
                           onTap: () {
                             game.reset();
+                            FlameAudio.bgm.stop().then(
+                                  (value) => FlameAudio.bgm.play('bgm.wav'),
+                                );
                             game.overlays.remove('GameOver');
                           },
                           emoji: '🎮',
