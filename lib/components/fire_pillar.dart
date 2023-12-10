@@ -19,7 +19,7 @@ class FirePillar extends SpriteAnimationComponent
   @override
   FutureOr<void> onLoad() async {
     priority = 1;
-    final ui.Image image = await Flame.images.load('fire_pillar.png');
+    final ui.Image image = await Flame.images.load('tile/fire_pillar.png');
     animation = SpriteAnimation.fromFrameData(
       image,
       SpriteAnimationData.sequenced(

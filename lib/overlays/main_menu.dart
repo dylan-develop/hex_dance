@@ -1,8 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:hex_dance/game/hex_dance_game.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'dart:async';
 
-class MainMenu extends StatelessWidget {
+import 'package:flame/extensions.dart';
+import 'package:flutter/material.dart';
+import 'package:hex_dance/components/buttons/hex_button.dart';
+import 'package:hex_dance/core/game_value.dart';
+import 'package:hex_dance/game/hex_dance_game.dart';
+import 'package:hexagon/hexagon.dart';
+
+class MainMenu extends StatefulWidget {
   // Reference to parent game.
   final HexDanceGame game;
 
@@ -12,50 +17,100 @@ class MainMenu extends StatelessWidget {
   });
 
   @override
+  State<MainMenu> createState() => _MainMenuState();
+}
+
+class _MainMenuState extends State<MainMenu> {
+  late Timer timer;
+  @override
+  void initState() {
+    timer = Timer.periodic(
+      const Duration(seconds: 2),
+      (callback) {
+        setState(() {});
+      },
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: Center(
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          decoration: const BoxDecoration(
-            color: Colors.black87,
-            borderRadius: BorderRadius.all(
-              Radius.circular(12.0),
+      child: Stack(
+        children: [
+          Center(
+            child: HexagonGrid.flat(
+              depth: 4,
+              width: GameValue.boardSize,
+              buildTile: (coordinates) {
+                final colors = [
+                  Colors.red,
+                  Colors.blue,
+                  Colors.white,
+                  Colors.white,
+                ];
+
+                return HexagonWidgetBuilder(
+                  padding: 2.0,
+                  cornerRadius: 8.0,
+                  color: colors.random(),
+                );
+              },
             ),
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 150.0,
-                  height: 50.0,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      game.overlays.remove('MainMenu');
-
-                      game.startGame();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                    ),
-                    child: GradientText(
-                      '🎮',
-                      style: const TextStyle(
-                        fontSize: 32.0,
-                      ),
-                      colors: const [
-                        Colors.red,
-                        Colors.blue,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              padding: EdgeInsets.all(GameValue.hexRadius),
+              margin: EdgeInsets.only(bottom: GameValue.boardSize / 5),
+              width: GameValue.boardSize / 2,
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.9),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(12.0),
+                ),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: Center(
+                            child: HexButton(
+                              onTap: () {
+                                widget.game.overlays.remove('MainMenu');
+                                widget.game.startGame();
+                              },
+                              emoji: '🎮',
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: HexButton(
+                            onTap: () {},
+                            emoji: '📖',
+                            color: Colors.blue,
+                          ),
+                        ),
                       ],
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

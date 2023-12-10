@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hex_dance/components/buttons/hex_button.dart';
+import 'package:hex_dance/core/game_value.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
 
 class GameOver extends StatelessWidget {
@@ -12,16 +14,22 @@ class GameOver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scorePrefixIcon = game.scoreCounter.second < 60 * 5
+        ? '🪦'
+        : game.scoreCounter.second < 60 * 5
+            ? '🎖️'
+            : '🏆';
     return Material(
       color: Colors.transparent,
-      child: Center(
+      child: Align(
+        alignment: Alignment.bottomCenter,
         child: Container(
-          padding: const EdgeInsets.all(10.0),
-          height: 200,
-          width: 300,
-          decoration: const BoxDecoration(
-            color: Colors.black87,
-            borderRadius: BorderRadius.all(
+          padding: EdgeInsets.all(GameValue.hexRadius),
+          margin: EdgeInsets.only(bottom: GameValue.boardSize / 5),
+          width: GameValue.boardSize / 1.5,
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.9),
+            borderRadius: const BorderRadius.all(
               Radius.circular(12.0),
             ),
           ),
@@ -29,25 +37,47 @@ class GameOver extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 150.0,
-                  height: 50.0,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      game.reset();
-                      game.overlays.remove('GameOver');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                    ),
-                    child: const Text(
-                      '↻',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                      ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    scorePrefixIcon,
+                    style: const TextStyle(
+                      fontSize: 48.0,
                     ),
                   ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 16.0),
+                  child: Text(
+                    '⏱️ ${game.scoreCounter.secondStr.join()}',
+                    style: const TextStyle(
+                      fontSize: 28.0,
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: HexButton(
+                          onTap: () {
+                            game.reset();
+                            game.overlays.remove('GameOver');
+                          },
+                          emoji: '🎮',
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: HexButton(
+                        onTap: () {},
+                        emoji: '📖',
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -14,6 +14,7 @@ dependencies:
   flame_tiled: ^1.18.0
   flutter:
     sdk: flutter
+  hexagon: ^0.2.0
   simple_gradient_text: ^1.3.0
 
 dev_dependencies:
@@ -25,8 +26,8 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-  uses-material-design: false
+  uses-material-design: true
   assets:
-    - assets/images/
+    - assets/images/tile/
     - assets/images/player/
     - assets/audio/

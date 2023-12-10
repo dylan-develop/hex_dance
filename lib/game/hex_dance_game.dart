@@ -73,7 +73,7 @@ class HexDanceGame extends FlameGame
   }
 
   @override
-  Color backgroundColor() => Colors.grey;
+  Color backgroundColor() => Colors.black;
 
   void pause() {
     hexMap.pause();

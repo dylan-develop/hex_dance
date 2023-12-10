@@ -86,7 +86,7 @@ class Hexagon extends PolygonComponent {
     // ),
     // );
 
-    final image = await Flame.images.load('hex_tiled.png');
+    final image = await Flame.images.load('tile/hex_tiled.png');
     add(SpriteComponent.fromImage(image, size: size));
 
     return super.onLoad();

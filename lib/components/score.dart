@@ -7,21 +7,8 @@ import 'package:hex_dance/core/game_value.dart';
 class Score extends PositionComponent {
   Timer? scoreCounter;
 
-  static final mapping = {
-    '0': '0️⃣',
-    '1': '1️⃣',
-    '2': '2️⃣',
-    '3': '3️⃣',
-    '4': '4️⃣',
-    '5': '5️⃣',
-    '6': '6️⃣',
-    '7': '7️⃣',
-    '8': '8️⃣',
-    '9': '9️⃣',
-  };
-
   int second = 0;
-  List<String> secondStr = [mapping['0'] ?? ''];
+  List<String> secondStr = [GameValue.scoreMapping['0'] ?? ''];
 
   void start() {
     scoreCounter = Timer(
@@ -31,9 +18,9 @@ class Score extends PositionComponent {
         second++;
         for (int i = '$second'.length; i > 0; i--) {
           if (secondStr.length >= i) {
-            secondStr[i - 1] = mapping['$second'[i - 1]] ?? '';
+            secondStr[i - 1] = GameValue.scoreMapping['$second'[i - 1]] ?? '';
           } else {
-            secondStr.add(mapping['$second'[i - 1]] ?? '');
+            secondStr.add(GameValue.scoreMapping['$second'[i - 1]] ?? '');
           }
         }
       },
@@ -46,7 +33,7 @@ class Score extends PositionComponent {
 
   void reset() {
     second = 0;
-    secondStr = [mapping['0'] ?? ''];
+    secondStr = [GameValue.scoreMapping['0'] ?? ''];
     scoreCounter
       ?..reset()
       ..start();
