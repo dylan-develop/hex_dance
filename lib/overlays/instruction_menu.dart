@@ -21,7 +21,7 @@ class InstructionMenu extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(GameValue.hexRadius),
           margin: EdgeInsets.only(bottom: GameValue.boardSize / 5),
-          width: GameValue.boardSize,
+          width: GameValue.screenSize * 2 / 3,
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.9),
             borderRadius: const BorderRadius.all(
@@ -33,41 +33,34 @@ class InstructionMenu extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: GridView.count(
-                        crossAxisCount: 3,
-                        shrinkWrap: true,
-                        children: ['q', 'w', 'e', 'a', 's', 'd']
-                            .map(
-                              (k) => HexButton(
-                                onTap: () {},
-                                child: Image.asset(
-                                  'images/keyboard/$k.png',
-                                  fit: BoxFit.cover,
-                                  width: 24.0,
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(),
-                    ),
-                  ],
-                ),
                 Container(
                   margin: const EdgeInsets.only(top: 24.0),
-                  child: const Text(
-                    '🏆 🟰 ❌ ☠️',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 32.0),
+                  child: GridView.count(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 1,
+                    crossAxisSpacing: 1,
+                    shrinkWrap: true,
+                    children: [
+                      '🏆',
+                      '🟰',
+                      '❌ ☠️',
+                      '🔥',
+                      '🟰',
+                      '☠️s',
+                      '❄️',
+                      '🟰',
+                      '🦥',
+                    ]
+                        .map(
+                          (e) => Text(
+                            e,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 32.0),
+                          ),
+                        )
+                        .toList(),
                   ),
                 ),
-                const SizedBox(height: 56.0),
                 HexButton(
                   onTap: () {
                     game.overlays.remove('InstructionMenu');
