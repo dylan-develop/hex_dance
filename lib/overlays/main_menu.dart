@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hex_dance/enum/game_state.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
@@ -34,6 +35,7 @@ class MainMenu extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       game.overlays.remove('MainMenu');
+                      game.startGame();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
