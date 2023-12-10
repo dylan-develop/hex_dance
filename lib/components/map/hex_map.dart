@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_dance/components/fire_pillar.dart';
+import 'package:hex_dance/components/fire_tile.dart';
+import 'package:hex_dance/components/ice_tile.dart';
 import 'package:hex_dance/components/map/hexagon.dart';
 import 'package:hex_dance/core/game_value.dart';
 import 'package:hex_dance/enum/game_state.dart';
@@ -49,6 +51,7 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
               fireTilesRandom.getRange(0, GameValue.fireTilesTotal).toList();
           for (int i = 0; i < fireTiles.length; i++) {
             hexList[fireTiles[i]].paint = Paint()..color = Colors.pink;
+            hexList[fireTiles[i]].add(FireTile());
             Future.delayed(const Duration(seconds: 2), () {
               hexList[fireTiles[i]].add(
                 FirePillar(
@@ -77,7 +80,8 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
           iceTiles =
               iceTilesRandom.getRange(0, GameValue.iceTilesTotal).toList();
           for (int i = 0; i < iceTiles.length; i++) {
-            hexList[iceTiles[i]].paint = Paint()..color = Colors.blue;
+              hexList[iceTiles[i]].paint = Paint()..color = Colors.blue;
+              hexList[iceTiles[i]].add(IceTile());
           }
         }
       },

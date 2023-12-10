@@ -2,48 +2,16 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
-import 'package:hex_dance/core/game_value.dart';
 
 class Hexagon extends PolygonComponent {
-  Hexagon({
-    // required List<Vector2> vertices,
-    super.anchor = Anchor.topCenter,
-    super.position,
-  }) : super(
-          [
-            Vector2(
-              GameValue.hexRadius,
-              0,
-            ), // Right
-            Vector2(
-              GameValue.hexRadius / 2,
-              GameValue.hexInradius,
-            ), // Bottom-right
-            Vector2(
-              -GameValue.hexRadius / 2,
-              GameValue.hexInradius,
-            ), // Bottom-left
-            Vector2(
-              -GameValue.hexRadius,
-              0,
-            ), // Left
-            Vector2(
-              -GameValue.hexRadius / 2,
-              -GameValue.hexInradius,
-            ), // Top-left
-            Vector2(
-              GameValue.hexRadius / 2,
-              -GameValue.hexInradius,
-            ), // Top-right
-          ],
-        );
-
   Hexagon.relative({
     required double size,
     required int index,
     super.position,
     super.paint,
+    super.paintLayers,
     super.key,
   }) : super.relative(
           [
@@ -84,7 +52,7 @@ class Hexagon extends PolygonComponent {
         );
 
   @override
-  FutureOr<void> onLoad() {
+  FutureOr<void> onLoad() async {
     // add(
     // PolygonHitbox(
     //   [
@@ -117,6 +85,10 @@ class Hexagon extends PolygonComponent {
     // position: Vector2(size.x / 2, size.y / 2),
     // ),
     // );
+
+    final image = await Flame.images.load('hex_tiled.png');
+    add(SpriteComponent.fromImage(image, size: size));
+
     return super.onLoad();
   }
 }

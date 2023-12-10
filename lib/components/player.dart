@@ -28,10 +28,12 @@ class Player extends SpriteAnimationComponent
     await initAnimation();
     anchor = const Anchor(0.5, 0.75);
     size = GameValue.playerSize;
-    add(RectangleHitbox(
-      size: Vector2(size.x / 2, size.y),
-      position: Vector2(size.x / 4, 0),
-    ),);
+    add(
+      RectangleHitbox(
+        size: Vector2(size.x / 2, size.y),
+        position: Vector2(size.x / 4, 0),
+      ),
+    );
     return super.onLoad();
   }
 
