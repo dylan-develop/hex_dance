@@ -7,6 +7,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
+import 'package:hex_dance/components/fire_pillar.dart';
 import 'package:hex_dance/core/game_value.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
 
@@ -34,7 +35,9 @@ class Player extends SpriteAnimationComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    // print(other);
+    if (other is FirePillar) {
+      game.overlays.add('GameOver');
+    }
     super.onCollisionStart(intersectionPoints, other);
   }
 
