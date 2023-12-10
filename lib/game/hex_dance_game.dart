@@ -9,8 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:hex_dance/components/map/hex_map.dart';
 import 'package:hex_dance/components/player.dart';
 import 'package:hex_dance/components/score.dart';
+import 'package:hex_dance/core/game_state.dart';
 import 'package:hex_dance/core/game_value.dart';
-import 'package:hex_dance/enum/game_state.dart';
 
 class HexDanceGame extends FlameGame
     with HasCollisionDetection, KeyboardEvents {
