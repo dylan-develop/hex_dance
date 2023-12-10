@@ -20,12 +20,7 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
   List<int> fireTiles = [];
   List<int> iceTiles = [];
 
-  @override
-  FutureOr<void> onLoad() async {
-    paint = Paint()..color = Colors.black;
-
-    final int n = GameValue.noOfHexInSide; // Number of Hex in one side
-
+  void start() {
     interval = Timer(
       1,
       repeat: true,
@@ -82,6 +77,22 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
         }
       },
     );
+  }
+
+  void pause() {
+    interval?.pause();
+  }
+
+  void reset() {
+    second = 0;
+    interval?.reset();
+  }
+
+  @override
+  FutureOr<void> onLoad() async {
+    paint = Paint()..color = Colors.black;
+
+    final int n = GameValue.noOfHexInSide; // Number of Hex in one side
 
     // Upper
     for (int i = 0; i < n; i++) {

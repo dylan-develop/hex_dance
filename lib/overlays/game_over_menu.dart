@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class GameOver extends StatelessWidget {
   // Reference to parent game.

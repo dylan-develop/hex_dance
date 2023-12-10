@@ -37,6 +37,8 @@ class Player extends SpriteAnimationComponent
   ) {
     if (other is FirePillar) {
       game.overlays.add('GameOver');
+
+      game.pause();
     }
     super.onCollisionStart(intersectionPoints, other);
   }

@@ -7,11 +7,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hex_dance/components/map/hex_map.dart';
 import 'package:hex_dance/components/player.dart';
+import 'package:hex_dance/components/score.dart';
 import 'package:hex_dance/core/game_value.dart';
 
 class HexDanceGame extends FlameGame
     with HasCollisionDetection, KeyboardEvents {
   final Player player = Player();
+  final Score scoreCounter = Score();
+  final HexMap map = HexMap.relative(
+    [
+      Vector2(0, 1),
+      Vector2(sqrt(3) * 1 / 2, 1 / 2),
+      Vector2(sqrt(3) * 1 / 2, -1 / 2),
+      Vector2(0, -1),
+      Vector2(-sqrt(3) * 1 / 2, -1 / 2),
+      Vector2(-sqrt(3) * 1 / 2, 1 / 2),
+    ],
+    position: Vector2(
+      -(sqrt(3) * 1 / 2 * GameValue.boardSize / 2),
+      -GameValue.boardSize / 2,
+    ),
+    parentSize: Vector2.all(
+      GameValue.boardSize,
+    ),
+  );
 
   @override
   Future<void> onLoad() async {
@@ -23,25 +42,9 @@ class HexDanceGame extends FlameGame
     await add(world);
 
     world.addAll([
-      HexMap.relative(
-        [
-          Vector2(0, 1),
-          Vector2(sqrt(3) * 1 / 2, 1 / 2),
-          Vector2(sqrt(3) * 1 / 2, -1 / 2),
-          Vector2(0, -1),
-          Vector2(-sqrt(3) * 1 / 2, -1 / 2),
-          Vector2(-sqrt(3) * 1 / 2, 1 / 2),
-        ],
-        position: Vector2(
-          -(sqrt(3) * 1 / 2 * GameValue.boardSize / 2),
-          -GameValue.boardSize / 2,
-        ),
-        parentSize: Vector2.all(
-          GameValue.boardSize,
-        ),
-      ),
+      map,
       player,
-      // FirePillar(),
+      scoreCounter,
     ]);
 
     return super.onLoad();
@@ -89,7 +92,18 @@ class HexDanceGame extends FlameGame
   @override
   Color backgroundColor() => Colors.grey;
 
+  void start() {
+    map.start();
+    scoreCounter.start();
+  }
+
+  void pause() {
+    map.pause();
+    scoreCounter.pause();
+  }
+
   void reset() {
-    // TODO: Add reset function
+    // map.pause();
+    scoreCounter.reset();
   }
 }
