@@ -72,7 +72,9 @@ class GameOver extends StatelessWidget {
                     ),
                     Expanded(
                       child: HexButton(
-                        onTap: () {},
+                        onTap: () {
+                          game.overlays.add('InstructionMenu');
+                        },
                         emoji: '📖',
                         color: Colors.blue,
                       ),

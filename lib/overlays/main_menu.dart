@@ -48,7 +48,6 @@ class _MainMenuState extends State<MainMenu> {
           Center(
             child: HexagonGrid.flat(
               depth: 4,
-              width: GameValue.boardSize,
               buildTile: (coordinates) {
                 final colors = [
                   Colors.red,
@@ -56,7 +55,7 @@ class _MainMenuState extends State<MainMenu> {
                   Colors.white,
                   Colors.white,
                 ];
-
+            
                 return HexagonWidgetBuilder(
                   padding: 2.0,
                   cornerRadius: 8.0,
@@ -98,7 +97,9 @@ class _MainMenuState extends State<MainMenu> {
                         ),
                         Expanded(
                           child: HexButton(
-                            onTap: () {},
+                            onTap: () {
+                              widget.game.overlays.add('InstructionMenu');
+                            },
                             emoji: '📖',
                             color: Colors.blue,
                           ),

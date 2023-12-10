@@ -9,11 +9,13 @@ class HexButton extends StatefulWidget {
     this.onTap,
     this.emoji,
     this.color,
+    this.child,
   });
 
   final void Function()? onTap;
   final String? emoji;
   final Color? color;
+  final Widget? child;
 
   @override
   State<HexButton> createState() => _HexButtonState();
@@ -60,7 +62,7 @@ class _HexButtonState extends State<HexButton> {
         cornerRadius: 8.0,
         color: _color,
         child: Center(
-          child: Text(
+          child: widget.child ?? Text(
             widget.emoji ?? '',
             style: const TextStyle(
               fontSize: 20.0,
