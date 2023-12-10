@@ -21,7 +21,7 @@ class HexDanceGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    await FlameAudio.audioCache.loadAll(['fire.mp3', 'ice.mp3w']);
+    await FlameAudio.audioCache.loadAll(['bgm.wav', 'fire.mp3', 'ice.mp3w']);
 
     camera = CameraComponent.withFixedResolution(
       world: world,

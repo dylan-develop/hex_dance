@@ -1,3 +1,4 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_dance/components/buttons/hex_button.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
@@ -21,6 +22,7 @@ class MainMenu extends StatelessWidget {
         return HexButton(
           onTap: () {
             game.overlays.remove('MainMenu');
+            FlameAudio.bgm.play('bgm.wav');
             game.startGame();
           },
           width: 144.0,
