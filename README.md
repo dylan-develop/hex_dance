@@ -1,16 +1,19 @@
-# hex_dance
+# Hex Dance
 
-A new Flutter project.
+A web mini game built with Flutter & Flame in Flame Game Jam 3.0. The main theme of the game is "Hot & Cold" and the limitation selected of the game is "No Text".
 
-## Getting Started
+In this small game, you will be fell into a hexagon world and surrounded by fire pillars and ice which will make you in danger. You have no idea on when and where the dangers come so please stay focus and try to escape from the dangerous! Survive!
 
-This project is a starting point for a Flutter application.
+## Getting Started 🚀
+Use the following commands:
+```sh
+$ flutter run -d chrome
+```
 
-A few resources to get you started if this is your first Flutter project:
+## How To Play
+You can control the player with key Q, W, E, A, S, D to hop to different direction to escape from the dangers. 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+There's no fixed win condition, what you need to do is try to survive as long as you can. With longer survival time, high score will be counted.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Credits
+- Game Character Creation: [pixeldudesmaker](https://0x72.itch.io/pixeldudesmaker)
