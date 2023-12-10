@@ -38,7 +38,7 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
       repeat: true,
       onTick: () async {
         second++;
-        if (second >= 5) {
+        if (second % 7 == 0 || second == 1) {
           final hexList = children.query<Hexagon>();
 
           // get fire tile random position
@@ -51,7 +51,10 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
             hexList[fireTiles[i]].paint = Paint()..color = Colors.white;
 
             children.query<FirePillar>()[i]
-              ..position = hexList[fireTiles[i]].position
+              ..position = Vector2(
+                hexList[fireTiles[i]].position.x,
+                hexList[fireTiles[i]].position.y + GameValue.hexInradius,
+              )
               ..isVisible = false;
           }
 
@@ -60,10 +63,15 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
               fireTilesRandom.getRange(0, GameValue.fireTilesTotal).toList();
           for (int i = 0; i < fireTiles.length; i++) {
             hexList[fireTiles[i]].paint = Paint()..color = Colors.pink;
-
-            children.query<FirePillar>()[i]
-              ..position = hexList[fireTiles[i]].position
-              ..isVisible = true;
+            Future.delayed(
+              const Duration(seconds: 2),
+              () => children.query<FirePillar>()[i]
+                ..position = Vector2(
+                  hexList[fireTiles[i]].position.x,
+                  hexList[fireTiles[i]].position.y + GameValue.hexInradius,
+                )
+                ..isVisible = true,
+            );
           }
 
           // get ice tile random position
@@ -84,8 +92,6 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
           for (int i = 0; i < iceTiles.length; i++) {
             hexList[iceTiles[i]].paint = Paint()..color = Colors.blue;
           }
-
-          second = 0;
         }
       },
     );
