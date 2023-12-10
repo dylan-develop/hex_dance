@@ -54,7 +54,6 @@ class Player extends SpriteAnimationComponent
       FlameAudio.play('fire.mp3');
       game.gameover();
       // animation = deathAnimation;
-      game.pause();
     } else if (other is Snowflakes) {
       stepTimeScale = 5;
       decorator.addLast(
@@ -120,7 +119,8 @@ class Player extends SpriteAnimationComponent
 
     if (nextCoordinate.x.abs() >= GameValue.noOfHexInSide ||
         nextCoordinate.y.abs() >= GameValue.noOfHexInSide ||
-        nextCoordinate.x + nextCoordinate.y >= GameValue.noOfHexInSide) {
+        (nextCoordinate.x + nextCoordinate.y).abs() >=
+            GameValue.noOfHexInSide) {
       return;
     }
 

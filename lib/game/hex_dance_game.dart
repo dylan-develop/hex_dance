@@ -120,6 +120,7 @@ class HexDanceGame extends FlameGame
 
   void gameover() {
     gameState = GameState.gameover;
+    pause();
     FlameAudio.bgm.stop().then((value) => FlameAudio.play('gameover.wav'));
     overlays.add('GameOver');
   }

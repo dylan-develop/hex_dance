@@ -45,7 +45,24 @@ class MainMenu extends StatelessWidget {
           emoji: '📖',
           color: Colors.blue,
         );
+      } else if (coordinates.x == -1 && coordinates.y == 2) {
+        return Text('H');
+      } else if (coordinates.x == 0 && coordinates.y == 1) {
+        return Text('E');
+      } else if (coordinates.x == 1 && coordinates.y == 1) {
+        return Text('X');
+      } else if (coordinates.x == -2 && coordinates.y == 1) {
+        return Text('D');
+      } else if (coordinates.x == -1 && coordinates.y == 1) {
+        return Text('A');
+      } else if (coordinates.x == 0 && coordinates.y == 0) {
+        return Text('N');
+      } else if (coordinates.x == 1 && coordinates.y == 0) {
+        return Text('C');
+      } else if (coordinates.x == 2 && coordinates.y == -1) {
+        return Text('E');
       }
+
       return null;
     }
 
