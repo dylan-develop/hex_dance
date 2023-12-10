@@ -6,8 +6,10 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
+import 'package:flame/rendering.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_dance/components/fire_pillar.dart';
+import 'package:hex_dance/components/snowflakes.dart';
 import 'package:hex_dance/core/game_value.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
 
@@ -28,10 +30,12 @@ class Player extends SpriteAnimationComponent
     await initAnimation();
     anchor = const Anchor(0.5, 0.75);
     size = GameValue.playerSize;
-    add(RectangleHitbox(
-      size: Vector2(size.x / 2, size.y),
-      position: Vector2(size.x / 4, 0),
-    ),);
+    add(
+      RectangleHitbox(
+        size: Vector2(size.x / 2, size.y),
+        position: Vector2(size.x / 4, 0),
+      ),
+    );
     return super.onLoad();
   }
 
@@ -44,6 +48,22 @@ class Player extends SpriteAnimationComponent
       game.gameover();
       animation = deathAnimation;
       game.pause();
+    } else if (other is Snowflakes) {
+      stepTimeScale = 5;
+      decorator.addLast(
+        PaintDecorator.tint(
+          const Color.fromARGB(80, 33, 150, 235),
+        ),
+      );
+      Future.delayed(
+        const Duration(seconds: 5),
+        () {
+          stepTimeScale = 1;
+          if (!decorator.isLastDecorator) {
+            decorator.removeLast();
+          }
+        },
+      );
     }
     super.onCollisionStart(intersectionPoints, other);
   }
@@ -194,6 +214,9 @@ class Player extends SpriteAnimationComponent
     direction = PlayerDirection.right;
     animation = idleAnimation;
     position = Vector2.zero();
+    if (!decorator.isLastDecorator) {
+      decorator.removeLast();
+    }
   }
 }
 

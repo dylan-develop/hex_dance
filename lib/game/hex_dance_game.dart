@@ -26,7 +26,6 @@ class HexDanceGame extends FlameGame
       height: GameValue.screenSize,
     );
     await add(world);
-
     return super.onLoad();
   }
 
