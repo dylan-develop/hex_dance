@@ -6,6 +6,7 @@ import 'package:hex_dance/components/fire_pillar.dart';
 import 'package:hex_dance/components/fire_tile.dart';
 import 'package:hex_dance/components/ice_tile.dart';
 import 'package:hex_dance/components/map/hexagon.dart';
+import 'package:hex_dance/components/snowflakes.dart';
 import 'package:hex_dance/core/game_value.dart';
 import 'package:hex_dance/enum/game_state.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
@@ -80,8 +81,19 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
           iceTiles =
               iceTilesRandom.getRange(0, GameValue.iceTilesTotal).toList();
           for (int i = 0; i < iceTiles.length; i++) {
-              hexList[iceTiles[i]].paint = Paint()..color = Colors.blue;
-              hexList[iceTiles[i]].add(IceTile());
+            hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
+            hexList[iceTiles[i]].add(IceTile());
+            hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
+            // Future.delayed(const Duration(seconds: 2), () {
+            //   hexList[iceTiles[i]].add(
+            //     Snowflakes(
+            //       position: Vector2(
+            //         GameValue.hexRadius,
+            //         GameValue.hexInradius,
+            //       ),
+            //     ),
+            //   );
+            // });
           }
         }
       },
@@ -177,9 +189,24 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
           hexList[fireTile].children.query<FirePillar>().first,
         );
       }
+      if (hexList[fireTile].children.query<FireTile>().isNotEmpty) {
+        hexList[fireTile].remove(
+          hexList[fireTile].children.query<FireTile>().first,
+        );
+      }
     }
     for (final int iceTile in iceTiles) {
       hexList[iceTile].paint = Paint()..color = Colors.white;
+      if (hexList[iceTile].children.query<IceTile>().isNotEmpty) {
+        hexList[iceTile].remove(
+          hexList[iceTile].children.query<IceTile>().first,
+        );
+      }
+      if (hexList[iceTile].children.query<Snowflakes>().isNotEmpty) {
+        hexList[iceTile].remove(
+          hexList[iceTile].children.query<Snowflakes>().first,
+        );
+      }
     }
     second = 0;
     fireTiles = [];

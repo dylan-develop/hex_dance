@@ -15,7 +15,7 @@ class IceTile extends SpriteComponent with HasGameRef<HexDanceGame> {
         );
   @override
   FutureOr<void> onLoad() async {
-    debugMode = true;
+    // debugMode = true;
     priority = 1;
     final image = await Flame.images.load('ice.png');
     size = Vector2(GameValue.hexRadius * 2, GameValue.hexInradius * 2);
