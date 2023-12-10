@@ -57,7 +57,7 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
               .getRange(
                 0,
                 min(
-                  GameValue.fireTilesTotal + (second / 60 / 60).floor(),
+                  GameValue.fireTilesTotal + (second / 20).floor(),
                   fireTilesRandom.length ~/ 2,
                 ),
               )

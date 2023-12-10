@@ -15,9 +15,9 @@ class GameOver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scorePrefixIcon = game.scoreCounter.second < 60 * 5
+    final scorePrefixIcon = game.scoreCounter.second < 60
         ? '🪦'
-        : game.scoreCounter.second < 60 * 5
+        : game.scoreCounter.second < 60 * 3
             ? '🎖️'
             : '🏆';
     return Material(
@@ -49,7 +49,7 @@ class GameOver extends StatelessWidget {
                 ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 16.0),
-                  child: (game.scoreCounter.second > 60 * 10)
+                  child: (game.scoreCounter.second > 60 * 5)
                       ? const Text(
                           '♾️',
                           style: TextStyle(
@@ -60,7 +60,7 @@ class GameOver extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             for (int i = 0; i < 5; i++)
-                              if (game.scoreCounter.second > 60 * i)
+                              if (game.scoreCounter.second > 30 * i)
                                 const Text(
                                   '⭐',
                                   style: TextStyle(
