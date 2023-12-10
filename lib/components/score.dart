@@ -35,7 +35,6 @@ class Score extends PositionComponent {
           } else {
             secondStr.add(mapping['$second'[i - 1]] ?? '');
           }
-          // print('secondStr: $secondStr');
         }
       },
     );
@@ -48,7 +47,9 @@ class Score extends PositionComponent {
   void reset() {
     second = 0;
     secondStr = [mapping['0'] ?? ''];
-    scoreCounter?.reset();
+    scoreCounter
+      ?..reset()
+      ..start();
   }
 
   @override

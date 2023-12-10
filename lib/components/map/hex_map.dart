@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hex_dance/components/fire_pillar.dart';
 import 'package:hex_dance/components/map/hexagon.dart';
 import 'package:hex_dance/core/game_value.dart';
+import 'package:hex_dance/enum/game_state.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
 
 class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
@@ -25,6 +26,10 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
       1,
       repeat: true,
       onTick: () async {
+        if (game.gameState != GameState.running) {
+          return;
+        }
+
         second++;
         if (second % 7 == 0 || second == 1) {
           final hexList = children.query<Hexagon>();
@@ -77,15 +82,6 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
         }
       },
     );
-  }
-
-  void pause() {
-    interval?.pause();
-  }
-
-  void reset() {
-    second = 0;
-    interval?.reset();
   }
 
   @override
@@ -162,5 +158,30 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
   @override
   void update(double dt) {
     interval?.update(dt);
+  }
+
+  void pause() {
+    interval?.pause();
+  }
+
+  void reset() {
+    final List<Hexagon> hexList = children.query<Hexagon>();
+    for (final int fireTile in fireTiles) {
+      hexList[fireTile].paint = Paint()..color = Colors.white;
+      if (hexList[fireTile].children.query<FirePillar>().isNotEmpty) {
+        hexList[fireTile].remove(
+          hexList[fireTile].children.query<FirePillar>().first,
+        );
+      }
+    }
+    for (final int iceTile in iceTiles) {
+      hexList[iceTile].paint = Paint()..color = Colors.white;
+    }
+    second = 0;
+    fireTiles = [];
+    iceTiles = [];
+    interval?.reset();
+
+    start();
   }
 }

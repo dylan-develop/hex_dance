@@ -19,7 +19,7 @@ class GameValue {
     Vector2(1 / 2, -sqrt(3) * 1 / 2),
   ];
 
-  static Vector2 playerSize = Vector2(50.0, 50.0);
+  static Vector2 playerSize = Vector2(48.0, 48.0);
   static Vector2 firePillarSize = Vector2(70.5, 138.0);
 
   static int fireTilesTotal = 10;

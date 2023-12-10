@@ -9,28 +9,14 @@ import 'package:hex_dance/components/map/hex_map.dart';
 import 'package:hex_dance/components/player.dart';
 import 'package:hex_dance/components/score.dart';
 import 'package:hex_dance/core/game_value.dart';
+import 'package:hex_dance/enum/game_state.dart';
 
 class HexDanceGame extends FlameGame
     with HasCollisionDetection, KeyboardEvents {
+  GameState gameState = GameState.initial;
   final Player player = Player();
   final Score scoreCounter = Score();
-  final HexMap map = HexMap.relative(
-    [
-      Vector2(0, 1),
-      Vector2(sqrt(3) * 1 / 2, 1 / 2),
-      Vector2(sqrt(3) * 1 / 2, -1 / 2),
-      Vector2(0, -1),
-      Vector2(-sqrt(3) * 1 / 2, -1 / 2),
-      Vector2(-sqrt(3) * 1 / 2, 1 / 2),
-    ],
-    position: Vector2(
-      -(sqrt(3) * 1 / 2 * GameValue.boardSize / 2),
-      -GameValue.boardSize / 2,
-    ),
-    parentSize: Vector2.all(
-      GameValue.boardSize,
-    ),
-  );
+  late final HexMap hexMap;
 
   @override
   Future<void> onLoad() async {
@@ -41,12 +27,6 @@ class HexDanceGame extends FlameGame
     );
     await add(world);
 
-    world.addAll([
-      map,
-      player,
-      scoreCounter,
-    ]);
-
     return super.onLoad();
   }
 
@@ -55,6 +35,10 @@ class HexDanceGame extends FlameGame
     RawKeyEvent event,
     Set<LogicalKeyboardKey> keysPressed,
   ) {
+    if (gameState != GameState.running) {
+      return KeyEventResult.ignored;
+    }
+
     final isKeyDown = event is RawKeyDownEvent;
 
     final bool isKeyW = keysPressed.contains(LogicalKeyboardKey.keyW);
@@ -92,18 +76,50 @@ class HexDanceGame extends FlameGame
   @override
   Color backgroundColor() => Colors.grey;
 
-  void start() {
-    map.start();
-    scoreCounter.start();
-  }
-
   void pause() {
-    map.pause();
+    hexMap.pause();
     scoreCounter.pause();
   }
 
+  void startGame() {
+    hexMap = HexMap.relative(
+      [
+        Vector2(0, 1),
+        Vector2(sqrt(3) * 1 / 2, 1 / 2),
+        Vector2(sqrt(3) * 1 / 2, -1 / 2),
+        Vector2(0, -1),
+        Vector2(-sqrt(3) * 1 / 2, -1 / 2),
+        Vector2(-sqrt(3) * 1 / 2, 1 / 2),
+      ],
+      position: Vector2(
+        -(sqrt(3) * 1 / 2 * GameValue.boardSize / 2),
+        -GameValue.boardSize / 2,
+      ),
+      parentSize: Vector2.all(
+        GameValue.boardSize,
+      ),
+    );
+    scoreCounter.start();
+    hexMap.start();
+
+    world.addAll([
+      hexMap,
+      player,
+      scoreCounter,
+    ]);
+
+    gameState = GameState.running;
+  }
+
+  void gameover() {
+    gameState = GameState.gameover;
+    overlays.add('GameOver');
+  }
+
   void reset() {
-    // map.pause();
     scoreCounter.reset();
+    player.reset();
+    hexMap.reset();
+    gameState = GameState.running;
   }
 }

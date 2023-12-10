@@ -15,6 +15,8 @@ class Player extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameRef<HexDanceGame> {
   late SpriteAnimation idleAnimation;
   late SpriteAnimation jumpAnimation;
+  late SpriteAnimation deathAnimation;
+
   PlayerDirection direction = PlayerDirection.right;
   final double normalIdleStepTime = 0.075;
   double normalJumpStepTime = 0.10;
@@ -26,7 +28,10 @@ class Player extends SpriteAnimationComponent
     await initAnimation();
     anchor = const Anchor(0.5, 0.75);
     size = GameValue.playerSize;
-    add(RectangleHitbox(size: size));
+    add(RectangleHitbox(
+      size: Vector2(size.x / 2, size.y),
+      position: Vector2(size.x / 4, 0),
+    ),);
     return super.onLoad();
   }
 
@@ -36,8 +41,8 @@ class Player extends SpriteAnimationComponent
     PositionComponent other,
   ) {
     if (other is FirePillar) {
-      game.overlays.add('GameOver');
-
+      game.gameover();
+      animation = deathAnimation;
       game.pause();
     }
     super.onCollisionStart(intersectionPoints, other);
@@ -59,6 +64,15 @@ class Player extends SpriteAnimationComponent
       textureSize: Vector2(48.0, 48.0),
     );
     jumpAnimation = SpriteAnimation.fromFrameData(jumpImage, jumpData);
+
+    final ui.Image deathImage = await Flame.images.load('player/death.png');
+    final SpriteAnimationData deathData = SpriteAnimationData.sequenced(
+      amount: 10,
+      stepTime: 0.10,
+      textureSize: Vector2(64.0, 64.0),
+      loop: false,
+    );
+    deathAnimation = SpriteAnimation.fromFrameData(deathImage, deathData);
     animation = idleAnimation;
   }
 
@@ -69,7 +83,7 @@ class Player extends SpriteAnimationComponent
     MovementDirection movementDirection = MovementDirection.up,
   }) {
     // Indicate previous movement is not finished
-    if (animation == jumpAnimation) {
+    if (animation == jumpAnimation || animation == deathAnimation) {
       return;
     }
     final Vector2 nextCoordinate = Vector2(
@@ -169,6 +183,17 @@ class Player extends SpriteAnimationComponent
       ),
       movementDirection: MovementDirection.downRight,
     );
+  }
+
+  void reset() {
+    stepTimeScale = 1;
+    playerHexCoordinate = Vector2.zero();
+    if (direction == PlayerDirection.left) {
+      flipHorizontally();
+    }
+    direction = PlayerDirection.right;
+    animation = idleAnimation;
+    position = Vector2.zero();
   }
 }
 
