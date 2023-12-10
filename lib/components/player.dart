@@ -9,7 +9,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/rendering.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:hex_dance/components/fire_pillar.dart';
+import 'package:hex_dance/components/tile/fire_pillar.dart';
 import 'package:hex_dance/components/tile/fire_tile.dart';
 import 'package:hex_dance/components/tile/ice_tile.dart';
 import 'package:hex_dance/components/tile/snowflakes.dart';
