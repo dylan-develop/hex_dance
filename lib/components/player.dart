@@ -19,12 +19,12 @@ import 'package:hex_dance/game/hex_dance_game.dart';
 class Player extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameRef<HexDanceGame> {
   late SpriteAnimation idleAnimation;
-  late SpriteAnimation jumpAnimation;
-  late SpriteAnimation deathAnimation;
+  late SpriteAnimation runAnimation;
+  // late SpriteAnimation deathAnimation;
 
   PlayerDirection direction = PlayerDirection.right;
-  final double normalIdleStepTime = 0.075;
-  double normalJumpStepTime = 0.10;
+  final double normalIdleStepTime = 0.15;
+  double normalJumpStepTime = 0.20;
   double stepTimeScale = 1;
   Vector2 playerHexCoordinate = Vector2.zero();
 
@@ -51,8 +51,9 @@ class Player extends SpriteAnimationComponent
     } else if (other is IceTile) {
       FlameAudio.play('ice.mp3');
     } else if (other is FirePillar) {
+      FlameAudio.play('fire.mp3');
       game.gameover();
-      animation = deathAnimation;
+      // animation = deathAnimation;
       game.pause();
     } else if (other is Snowflakes) {
       stepTimeScale = 5;
@@ -77,28 +78,28 @@ class Player extends SpriteAnimationComponent
   Future<void> initAnimation() async {
     final ui.Image idleImage = await Flame.images.load('player/idle.png');
     final SpriteAnimationData idleData = SpriteAnimationData.sequenced(
-      amount: 10,
+      amount: 4,
       stepTime: normalIdleStepTime,
-      textureSize: Vector2(48.0, 48.0),
+      textureSize: Vector2(16.0, 24.0),
     );
     idleAnimation = SpriteAnimation.fromFrameData(idleImage, idleData);
 
-    final ui.Image jumpImage = await Flame.images.load('player/jump.png');
-    final SpriteAnimationData jumpData = SpriteAnimationData.sequenced(
+    final ui.Image runImage = await Flame.images.load('player/run.png');
+    final SpriteAnimationData runData = SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.10,
-      textureSize: Vector2(48.0, 48.0),
+      textureSize: Vector2(16.0, 24.0),
     );
-    jumpAnimation = SpriteAnimation.fromFrameData(jumpImage, jumpData);
+    runAnimation = SpriteAnimation.fromFrameData(runImage, runData);
 
-    final ui.Image deathImage = await Flame.images.load('player/death.png');
-    final SpriteAnimationData deathData = SpriteAnimationData.sequenced(
-      amount: 10,
-      stepTime: 0.10,
-      textureSize: Vector2(64.0, 64.0),
-      loop: false,
-    );
-    deathAnimation = SpriteAnimation.fromFrameData(deathImage, deathData);
+    // final ui.Image deathImage = await Flame.images.load('player/death.png');
+    // final SpriteAnimationData deathData = SpriteAnimationData.sequenced(
+    //   amount: 10,
+    //   stepTime: 0.10,
+    //   textureSize: Vector2(64.0, 64.0),
+    //   loop: false,
+    // );
+    // deathAnimation = SpriteAnimation.fromFrameData(deathImage, deathData);
     animation = idleAnimation;
   }
 
@@ -109,7 +110,7 @@ class Player extends SpriteAnimationComponent
     MovementDirection movementDirection = MovementDirection.up,
   }) {
     // Indicate previous movement is not finished
-    if (animation == jumpAnimation || animation == deathAnimation) {
+    if (animation == runAnimation) {
       return;
     }
     final Vector2 nextCoordinate = Vector2(
@@ -130,7 +131,7 @@ class Player extends SpriteAnimationComponent
       }
     }
 
-    animation = jumpAnimation..stepTime = normalJumpStepTime * stepTimeScale;
+    animation = runAnimation..stepTime = normalJumpStepTime * stepTimeScale;
     add(
       MoveToEffect(
         pos,
