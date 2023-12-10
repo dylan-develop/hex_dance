@@ -120,7 +120,8 @@ class Player extends SpriteAnimationComponent
 
     if (nextCoordinate.x.abs() >= GameValue.noOfHexInSide ||
         nextCoordinate.y.abs() >= GameValue.noOfHexInSide ||
-        nextCoordinate.x + nextCoordinate.y >= GameValue.noOfHexInSide) {
+        (nextCoordinate.x + nextCoordinate.y).abs() >=
+            GameValue.noOfHexInSide) {
       return;
     }
 
