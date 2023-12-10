@@ -7,9 +7,12 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/rendering.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_dance/components/fire_pillar.dart';
-import 'package:hex_dance/components/snowflakes.dart';
+import 'package:hex_dance/components/tile/fire_tile.dart';
+import 'package:hex_dance/components/tile/ice_tile.dart';
+import 'package:hex_dance/components/tile/snowflakes.dart';
 import 'package:hex_dance/core/game_value.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
 
@@ -44,7 +47,10 @@ class Player extends SpriteAnimationComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    if (other is FirePillar) {
+    if (other is FireTile) {
+    } else if (other is IceTile) {
+      FlameAudio.play('ice.mp3');
+    } else if (other is FirePillar) {
       game.gameover();
       animation = deathAnimation;
       game.pause();

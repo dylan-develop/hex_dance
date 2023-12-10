@@ -4,9 +4,9 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:hex_dance/components/fire_pillar.dart';
 import 'package:hex_dance/components/map/hexagon.dart';
-import 'package:hex_dance/components/snowflakes.dart';
 import 'package:hex_dance/components/tile/fire_tile.dart';
 import 'package:hex_dance/components/tile/ice_tile.dart';
+import 'package:hex_dance/components/tile/snowflakes.dart';
 import 'package:hex_dance/core/game_value.dart';
 import 'package:hex_dance/enum/game_state.dart';
 import 'package:hex_dance/game/hex_dance_game.dart';
@@ -84,16 +84,16 @@ class HexMap extends PolygonComponent with HasGameRef<HexDanceGame> {
             hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
             hexList[iceTiles[i]].add(IceTile());
             hexList[iceTiles[i]].paint = Paint()..color = Colors.white;
-            // Future.delayed(const Duration(seconds: 2), () {
-            //   hexList[iceTiles[i]].add(
-            //     Snowflakes(
-            //       position: Vector2(
-            //         GameValue.hexRadius,
-            //         GameValue.hexInradius,
-            //       ),
-            //     ),
-            //   );
-            // });
+            Future.delayed(const Duration(seconds: 2), () {
+              hexList[iceTiles[i]].add(
+                Snowflakes(
+                  position: Vector2(
+                    GameValue.hexRadius,
+                    GameValue.hexInradius,
+                  ),
+                ),
+              );
+            });
           }
         }
       },

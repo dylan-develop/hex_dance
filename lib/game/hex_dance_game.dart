@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hex_dance/components/map/hex_map.dart';
@@ -20,6 +21,8 @@ class HexDanceGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
+    await FlameAudio.audioCache.loadAll(['fire.mp3', 'ice.mp3w']);
+
     camera = CameraComponent.withFixedResolution(
       world: world,
       width: GameValue.screenSize,

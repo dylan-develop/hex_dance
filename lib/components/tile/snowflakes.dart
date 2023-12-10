@@ -20,7 +20,7 @@ class Snowflakes extends SpriteComponent
   FutureOr<void> onLoad() async {
     // debugMode = true;
     priority = 1;
-    final ui.Image image = await Flame.images.load('snowflakes.gif');
+    final ui.Image image = await Flame.images.load('tile/snowflakes.gif');
     sprite = Sprite(image);
 
     size = GameValue.snowflakesSize;
